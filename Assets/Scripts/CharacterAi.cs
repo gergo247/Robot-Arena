@@ -6,13 +6,14 @@ public class CharacterAi : MonoBehaviour
 {
     private static List<Character> Allys;
 
-    public float moveSpeed = 5f;
+    public float moveSpeed = 10f;
 
     [Range(0f, 1f)]
     public float turnSpeed = .1f;
 
-    public float repelRange = .5f;
+    public float repelRange = 5f;
     public float repelAmount = 1f;
+    public float distanceToKeepWithTarget = 1f;
 
     public float startMaxChaseDistance = 20f;
     private float maxChaseDistance;
@@ -60,56 +61,46 @@ public class CharacterAi : MonoBehaviour
     {
         if (target == null)
         {
-            LookForEnemy();
+            LookForClosestEnemy();
         }
-
-
-        //  maxChaseDistance = startMaxChaseDistance * Progression.Growth;
         if (target == null)
             return;
 
         float distance = Vector2.Distance(character.rb.position, target.rb.position);
-
         //if (distance > maxChaseDistance)
         //{
         //    Destroy(gameObject);
         //    return;
         //}
-
         Vector2 direction = (target.rb.position - character.rb.position).normalized;
-
         Vector2 newPos;
-
+        //move with force ( overmoves rn)
         if (isShooter)
         {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-            character.rb.rotation = angle;
-
-            if (distance > shootDistance)
-            {
-                newPos = MoveRegular(direction);
-            }
-            else
-            {
-                newPos = MoveStrafing(direction);
-            }
-
-            Shoot();
-
-            newPos -= character.rb.position;
-
-            character.rb.AddForce(newPos, ForceMode2D.Force);
-
+           //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+           ////character.rb.rotation = angle;
+           //if (distance > shootDistance)
+           //{
+           //    newPos = MoveRegular(direction);
+           //}
+           //else
+           //{
+           //    newPos = MoveStrafing(direction);
+           //}
+           ////Shoot();
+           //newPos -= character.rb.position;
+           // character.rb.AddForce(newPos, ForceMode2D.Force);
+            character.rb.AddForce(direction, ForceMode2D.Force);
         }
         else
         {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-            character.rb.rotation = Mathf.LerpAngle(character.rb.rotation, angle, turnSpeed);
-
-            newPos = MoveRegular(direction);
-
-            character.rb.MovePosition(newPos);
+            MoveTowards();
+           //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+           //character.rb.rotation = Mathf.LerpAngle(character.rb.rotation, angle, turnSpeed);
+           //newPos = MoveRegular(direction);
+           //character.rb.MovePosition(newPos);
         }
+      //  character.rb.eulerAngles = new Vector3(0, 0, 0);
     }
 
     void Shoot()
@@ -122,11 +113,14 @@ public class CharacterAi : MonoBehaviour
             nextTimeToFire = Time.time + 1f / fireRate;
         }
     }
-    void LookForEnemy()
+    void LookForClosestEnemy()
     {
         GameObject[] targetGO = GameObject.FindGameObjectsWithTag("Character");
         Debug.Log("targetGO length : " + targetGO.Length);
 
+        Transform tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector2 currentPosition = transform.position;
         if (targetGO != null)
         {
             foreach (GameObject go in targetGO)
@@ -134,14 +128,24 @@ public class CharacterAi : MonoBehaviour
                Character tempTarget = go.GetComponent(typeof(Character)) as Character;
                 if(character.Team != tempTarget.Team)
                 {
-                    target = tempTarget;
-                     Debug.Log("found enemy : " + target);
+                    float distanceToTarget = Vector2.Distance(tempTarget.rb.position, currentPosition);
+                    if (distanceToTarget < minDist)
+                    {
+                        minDist = distanceToTarget;
+                        target = tempTarget;
+                        Debug.Log("found enemy : " + target);
+                     }
                 }
             }
-            
         }
         //target.GetType
-
+    }
+    void MoveTowards()
+    {
+        //simple move towards
+        var step = moveSpeed * Time.deltaTime;
+        if (Vector2.Distance(transform.position, target.rb.position) > distanceToKeepWithTarget)
+             transform.position = Vector3.MoveTowards(transform.position, target.rb.position, step);
     }
 
     Vector2 MoveStrafing(Vector2 direction)
@@ -153,17 +157,21 @@ public class CharacterAi : MonoBehaviour
     Vector2 MoveRegular(Vector2 direction)
     {
         Vector2 repelForce = Vector2.zero;
-        foreach (Character ally in Allys)
-        {
-            if (ally == character)
-                continue;
-
-            if (Vector2.Distance(ally.rb.position, character.rb.position) <= repelRange)
+        if (GameManager.instance != null)
+            if (GameManager.instance.AllCharactersInScene.Count > 0)
             {
-                Vector2 repelDir = (character.rb.position - ally.rb.position).normalized;
-                repelForce += repelDir;
+                foreach (Character characters in GameManager.instance.AllCharactersInScene)
+                {
+                    if (characters == character)
+                        continue;
+
+                    if (Vector2.Distance(characters.rb.position, character.rb.position) <= repelRange)
+                    {
+                        Vector2 repelDir = (character.rb.position - characters.rb.position).normalized;
+                        repelForce += repelDir;
+                    }
+                }
             }
-        }
 
         Vector2 newPos = transform.position + transform.up * Time.fixedDeltaTime * moveSpeed;
         newPos += repelForce * Time.fixedDeltaTime * repelAmount;
