@@ -13,7 +13,8 @@ public class CharacterAi : MonoBehaviour
 
     public float repelRange = 5f;
     public float repelAmount = 1f;
-    public float distanceToKeepWithTarget = 1f;
+    //moved to class
+   // public float distanceToKeepWithTarget = 1f;
 
     public float startMaxChaseDistance = 20f;
     private float maxChaseDistance;
@@ -35,6 +36,10 @@ public class CharacterAi : MonoBehaviour
 
 
     private Character target;
+
+    bool canAttack;
+    float autoAttackCurrentTime;
+
 
     // Use this for initialization
     void Start()
@@ -65,15 +70,25 @@ public class CharacterAi : MonoBehaviour
         }
         if (target == null)
             return;
+        
 
         float distance = Vector2.Distance(character.rb.position, target.rb.position);
-        //if (distance > maxChaseDistance)
-        //{
-        //    Destroy(gameObject);
-        //    return;
-        //}
         Vector2 direction = (target.rb.position - character.rb.position).normalized;
         Vector2 newPos;
+        if (distance < character.characterClass.attackRange)
+            canAttack = true;
+        else
+            canAttack = false;
+
+        //moving towards target
+        MoveTowards();
+        Attack();
+
+
+
+
+
+
         //move with force ( overmoves rn)
         if (isShooter)
         {
@@ -92,15 +107,6 @@ public class CharacterAi : MonoBehaviour
            // character.rb.AddForce(newPos, ForceMode2D.Force);
             character.rb.AddForce(direction, ForceMode2D.Force);
         }
-        else
-        {
-            MoveTowards();
-           //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-           //character.rb.rotation = Mathf.LerpAngle(character.rb.rotation, angle, turnSpeed);
-           //newPos = MoveRegular(direction);
-           //character.rb.MovePosition(newPos);
-        }
-      //  character.rb.eulerAngles = new Vector3(0, 0, 0);
     }
 
     void Shoot()
@@ -112,6 +118,19 @@ public class CharacterAi : MonoBehaviour
 
             nextTimeToFire = Time.time + 1f / fireRate;
         }
+    }
+    void Attack()
+    {
+        if (canAttack)
+            if (autoAttackCurrentTime < character.characterClass.autoAttackCooldown)
+            {
+                autoAttackCurrentTime += Time.deltaTime;
+            }
+            else
+            {
+                target.TakeDamage(character.characterClass.damage);
+                autoAttackCurrentTime = 0;
+            }
     }
     void LookForClosestEnemy()
     {
@@ -126,7 +145,7 @@ public class CharacterAi : MonoBehaviour
             foreach (GameObject go in targetGO)
             {
                Character tempTarget = go.GetComponent(typeof(Character)) as Character;
-                if(character.Team != tempTarget.Team)
+                if(character.team != tempTarget.team)
                 {
                     float distanceToTarget = Vector2.Distance(tempTarget.rb.position, currentPosition);
                     if (distanceToTarget < minDist)
@@ -144,7 +163,7 @@ public class CharacterAi : MonoBehaviour
     {
         //simple move towards
         var step = moveSpeed * Time.deltaTime;
-        if (Vector2.Distance(transform.position, target.rb.position) > distanceToKeepWithTarget)
+        if (Vector2.Distance(transform.position, target.rb.position) > character.characterClass.distanceToKeepWithTarget)
              transform.position = Vector3.MoveTowards(transform.position, target.rb.position, step);
     }
 
