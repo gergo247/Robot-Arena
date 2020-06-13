@@ -59,23 +59,32 @@ public class CharacterAi : MonoBehaviour
 
     private void OnDestroy()
     {
-        Allys.Remove(character);
+        if (Allys != null)
+          if (Allys.Contains(character))
+              Allys.Remove(character);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (character.dead)
+        {
+            return;
+        }
+
         if (target == null)
         {
             LookForClosestEnemy();
         }
         if (target == null)
         {
+            if (animator != null)
             animator.SetFloat("Speed", 0);
 
             return;
         }
-        animator.SetFloat("Speed", moveSpeed);
+        if (animator != null)
+            animator.SetFloat("Speed", moveSpeed);
 
 
         float distance = Vector2.Distance(character.rb.position, target.rb.position);
@@ -144,32 +153,10 @@ public class CharacterAi : MonoBehaviour
             }
             else
             {
+                //attack animations
                 int randomInt = Random.Range(1, character.characterClass.attakcAnimations.Count);
                 //animation calls damage too
                 animator.Play(character.characterClass.attakcAnimations[randomInt].name);
-                //switch (randomInt)
-                //{
-                //    case 1:
-                //        animator.SetTrigger("Unarmed1");
-                //        break;
-                //    case 2:
-                //        animator.SetTrigger("Unarmed2");
-                //        break;
-                //    case 3:
-                //        animator.SetTrigger("Unarmed3");
-                //        break;
-                //    case 4:
-                //        animator.SetTrigger("Sword1");
-                //        break;
-                //    case 5:
-                //        animator.SetTrigger("Sword2");
-                //        break;
-                //    case 6:
-                //        animator.SetTrigger("Sword3");
-                //        break;
-                //    default:
-                //        break;
-                //}
 
                 autoAttackCurrentTime = 0;
             }
@@ -177,13 +164,14 @@ public class CharacterAi : MonoBehaviour
 
     void DamageTargetFromAnimation()
     {
-        target.TakeDamage(character.characterClass.damage);
+        if (target != null)
+          target.TakeDamage(character.characterClass.damage);
     }
 
     void LookForClosestEnemy()
     {
         GameObject[] targetGO = GameObject.FindGameObjectsWithTag("Character");
-        Debug.Log("targetGO length : " + targetGO.Length);
+      //  Debug.Log("targetGO length : " + targetGO.Length);
 
         Transform tMin = null;
         float minDist = Mathf.Infinity;
@@ -200,7 +188,7 @@ public class CharacterAi : MonoBehaviour
                     {
                         minDist = distanceToTarget;
                         target = tempTarget;
-                        Debug.Log("found enemy : " + target);
+                        //Debug.Log("found enemy : " + target);
                      }
                 }
             }

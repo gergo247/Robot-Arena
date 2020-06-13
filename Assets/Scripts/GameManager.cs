@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LookForEveryCharacterInScene();
-
-
     }
 
     void LookForEveryCharacterInScene()

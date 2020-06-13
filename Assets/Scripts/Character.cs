@@ -18,9 +18,16 @@ public class Character : MonoBehaviour
     public CharacterClass characterClass;
     [SerializeField]
     private GameObject gameObject;
+
+    public bool dead;
     void Start()
     {
         currentHealth = characterClass.maxHealth;
+        //Set the animationset of the character's class
+        string animatorFilePath = characterClass.GetAnimatorFilePath();
+          //  this.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animations/KnightMale/KnightMale.controller");
+          //set the animator on the character
+        this.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
     }
     public float GetHealthAmount()
     {
@@ -33,13 +40,15 @@ public class Character : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
+            dead = true;
             Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);
+        this.GetComponent<Animator>().SetTrigger("Die");
+        Destroy(gameObject,1.5f);
     }
 
 }
