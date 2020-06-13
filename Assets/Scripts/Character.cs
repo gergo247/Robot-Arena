@@ -11,19 +11,13 @@ public class Character : MonoBehaviour
     private CharacterCanvas characterCanvas;
     //player health 0-1 scale
     private float healthAmount;
-    
-
     public int team;
     public Rigidbody2D rb;
-
+    [HideInInspector]
     public float currentHealth;
     public CharacterClass characterClass;
     [SerializeField]
     private GameObject gameObject;
-
-
-   
-
     void Start()
     {
         currentHealth = characterClass.maxHealth;
@@ -37,7 +31,7 @@ public class Character : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
         }

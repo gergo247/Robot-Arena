@@ -7,6 +7,7 @@ public class CharacterAi : MonoBehaviour
     private static List<Character> Allys;
 
     public float moveSpeed = 10f;
+    public Animator animator;
 
     [Range(0f, 1f)]
     public float turnSpeed = .1f;
@@ -69,11 +70,26 @@ public class CharacterAi : MonoBehaviour
             LookForClosestEnemy();
         }
         if (target == null)
+        {
+            animator.SetFloat("Speed", 0);
+
             return;
-        
+        }
+        animator.SetFloat("Speed", moveSpeed);
+
 
         float distance = Vector2.Distance(character.rb.position, target.rb.position);
         Vector2 direction = (target.rb.position - character.rb.position).normalized;
+        //TODO: bool solution, this is hack
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector2(-2,2);
+        }
+        else
+        {
+            transform.localScale = new Vector2(2,2);
+        }
+
         Vector2 newPos;
         if (distance < character.characterClass.attackRange)
             canAttack = true;
@@ -128,10 +144,42 @@ public class CharacterAi : MonoBehaviour
             }
             else
             {
-                target.TakeDamage(character.characterClass.damage);
+                int randomInt = Random.Range(1, character.characterClass.attakcAnimations.Count);
+                //animation calls damage too
+                animator.Play(character.characterClass.attakcAnimations[randomInt].name);
+                //switch (randomInt)
+                //{
+                //    case 1:
+                //        animator.SetTrigger("Unarmed1");
+                //        break;
+                //    case 2:
+                //        animator.SetTrigger("Unarmed2");
+                //        break;
+                //    case 3:
+                //        animator.SetTrigger("Unarmed3");
+                //        break;
+                //    case 4:
+                //        animator.SetTrigger("Sword1");
+                //        break;
+                //    case 5:
+                //        animator.SetTrigger("Sword2");
+                //        break;
+                //    case 6:
+                //        animator.SetTrigger("Sword3");
+                //        break;
+                //    default:
+                //        break;
+                //}
+
                 autoAttackCurrentTime = 0;
             }
     }
+
+    void DamageTargetFromAnimation()
+    {
+        target.TakeDamage(character.characterClass.damage);
+    }
+
     void LookForClosestEnemy()
     {
         GameObject[] targetGO = GameObject.FindGameObjectsWithTag("Character");
@@ -162,9 +210,36 @@ public class CharacterAi : MonoBehaviour
     void MoveTowards()
     {
         //simple move towards
+        Vector2 newPos = Vector2.zero;
         var step = moveSpeed * Time.deltaTime;
         if (Vector2.Distance(transform.position, target.rb.position) > character.characterClass.distanceToKeepWithTarget)
-             transform.position = Vector3.MoveTowards(transform.position, target.rb.position, step);
+        { 
+        transform.position = Vector2.MoveTowards(transform.position, target.rb.position, step);
+        //newPos = Vector2.MoveTowards(transform.position, target.rb.position, step);
+        }
+        else
+            return;
+        // NEW THINGS, for repel
+        Vector2 repelForce = Vector2.zero;
+       //if (GameManager.instance != null)
+       //    if (GameManager.instance.AllCharactersInScene.Count > 0)
+       //{
+       //    foreach (Character characters in GameManager.instance.AllCharactersInScene)
+       //    {
+       //        if (characters == character)
+       //            continue;
+       //
+       //        if (Vector2.Distance(characters.rb.position, character.rb.position) <= repelRange)
+       //        {
+       //            Vector2 repelDir = (character.rb.position - characters.rb.position).normalized;
+       //            repelForce += repelDir;
+       //        }
+       //    }
+       //    newPos += repelForce * Time.fixedDeltaTime * repelAmount;
+       //}
+       //    transform.position = newPos;
+
+
     }
 
     Vector2 MoveStrafing(Vector2 direction)

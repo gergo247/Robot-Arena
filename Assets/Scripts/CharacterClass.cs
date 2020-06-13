@@ -10,4 +10,6 @@ public class CharacterClass : ScriptableObject
     public float damage;
     public float attackRange;
     public float distanceToKeepWithTarget;
+
+    public List<AnimationClip> attakcAnimations;
 }
