@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterClass
   maxHealth: 100
   autoAttackCooldown: 0.5
-  damage: 3
+  damage: 25
   attackRange: 0.82
   distanceToKeepWithTarget: 0.77
   attakcAnimations:

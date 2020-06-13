@@ -156,8 +156,9 @@ public class CharacterAi : MonoBehaviour
                 //attack animations
                 int randomInt = Random.Range(1, character.characterClass.attakcAnimations.Count);
                 //animation calls damage too
+                if( character.characterClass.attakcAnimations.Count > 0)
                 animator.Play(character.characterClass.attakcAnimations[randomInt].name);
-
+                
                 autoAttackCurrentTime = 0;
             }
     }

@@ -125,6 +125,7 @@ MonoBehaviour:
   currentHealth: 0
   characterClass: {fileID: 11400000, guid: e78a6ce9351f5aa43939134c7a495932, type: 2}
   gameObject: {fileID: 2717289494577247476}
+  dead: 0
 --- !u!114 &2717289494577247479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +160,7 @@ Animator:
   m_GameObject: {fileID: 2717289494577247476}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0b34640393d2bd4499aab64240cd9a3f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 18123c74511510f4a801ff85b7761b34, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

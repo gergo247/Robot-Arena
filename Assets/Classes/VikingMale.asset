@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edbcf7daff36d7447a85f453fa1f275d, type: 3}
+  m_Name: VikingMale
+  m_EditorClassIdentifier: 
+  maxHealth: 200
+  autoAttackCooldown: 1
+  damage: 25
+  attackRange: 0.9
+  distanceToKeepWithTarget: 0.8
+  attakcAnimations:
+  - {fileID: 7400000, guid: dd97bd46088949f42aff4f327f335f05, type: 2}
+  - {fileID: 7400000, guid: dd97bd46088949f42aff4f327f335f05, type: 2}
+  animator: {fileID: 9100000, guid: 18123c74511510f4a801ff85b7761b34, type: 2}
