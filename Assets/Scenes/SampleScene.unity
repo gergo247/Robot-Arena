@@ -199,6 +199,12 @@ PrefabInstance:
       propertyPath: team
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2717289494577247478, guid: 9cb461416bffbdb4aa8044db9658a4d0,
+        type: 3}
+      propertyPath: characterClass
+      value: 
+      objectReference: {fileID: 11400000, guid: c07606b6479993344991cdb4f1b868c9,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cb461416bffbdb4aa8044db9658a4d0, type: 3}
 --- !u!1 &519420028
@@ -362,6 +368,12 @@ PrefabInstance:
       propertyPath: team
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2717289494577247478, guid: 9cb461416bffbdb4aa8044db9658a4d0,
+        type: 3}
+      propertyPath: characterClass
+      value: 
+      objectReference: {fileID: 11400000, guid: c07606b6479993344991cdb4f1b868c9,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cb461416bffbdb4aa8044db9658a4d0, type: 3}
 --- !u!1001 &679731675

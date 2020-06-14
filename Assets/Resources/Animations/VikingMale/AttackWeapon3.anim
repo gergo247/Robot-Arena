@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AttackWeapon1
+  m_Name: AttackWeapon3
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,28 +20,28 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 6a0a53b5b22c9f047a6130fce5ca1ca7, type: 3}
+      value: {fileID: 21300000, guid: e5acffb23fcc6e2478353e1ce6649cef, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: e94378d54af021d49a04e76e1a610cf2, type: 3}
+      value: {fileID: 21300000, guid: 9f6fa8394f552b34695cdfbe2a0f26e3, type: 3}
     - time: 0.5
-      value: {fileID: 21300000, guid: f1c72c96b524ae544b38545650496cdc, type: 3}
+      value: {fileID: 21300000, guid: 9f6fa8394f552b34695cdfbe2a0f26e3, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 2df58b2e8a949184f8b9947eca428c05, type: 3}
+      value: {fileID: 21300000, guid: 80623c1dae811a34a9cc5f0dcab899ac, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: a102b53ce0268514dbc452a1a50caccd, type: 3}
+      value: {fileID: 21300000, guid: 08b4a7b44b4d0e147ad34bd66da13f89, type: 3}
     - time: 0.5
-      value: {fileID: 21300000, guid: 4810e8c3ac0d1994588ca1f40c879d62, type: 3}
+      value: {fileID: 21300000, guid: 99db09ab164f00a4ca2048a79c11dee7, type: 3}
     - time: 0.75
-      value: {fileID: 21300000, guid: d05120fe5ae737b41add389bb66d2b59, type: 3}
+      value: {fileID: 21300000, guid: 8d8ba1f3d96f08641963341107b9eb56, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: d49650d72bc11b4409da6ab280b53f67, type: 3}
+      value: {fileID: 21300000, guid: 56e5914a8fb060548a5f4cb5ef351920, type: 3}
     - time: 1.25
-      value: {fileID: 21300000, guid: baf61a8cfa1b3e147894fc3e3c6fb786, type: 3}
+      value: {fileID: 21300000, guid: 8614021f8bb4f8a4995b62b13c7bb621, type: 3}
     attribute: m_Sprite
     path: WeaponEffect
     classID: 212
@@ -68,15 +68,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 6a0a53b5b22c9f047a6130fce5ca1ca7, type: 3}
-    - {fileID: 21300000, guid: e94378d54af021d49a04e76e1a610cf2, type: 3}
-    - {fileID: 21300000, guid: f1c72c96b524ae544b38545650496cdc, type: 3}
-    - {fileID: 21300000, guid: 2df58b2e8a949184f8b9947eca428c05, type: 3}
-    - {fileID: 21300000, guid: a102b53ce0268514dbc452a1a50caccd, type: 3}
-    - {fileID: 21300000, guid: 4810e8c3ac0d1994588ca1f40c879d62, type: 3}
-    - {fileID: 21300000, guid: d05120fe5ae737b41add389bb66d2b59, type: 3}
-    - {fileID: 21300000, guid: d49650d72bc11b4409da6ab280b53f67, type: 3}
-    - {fileID: 21300000, guid: baf61a8cfa1b3e147894fc3e3c6fb786, type: 3}
+    - {fileID: 21300000, guid: e5acffb23fcc6e2478353e1ce6649cef, type: 3}
+    - {fileID: 21300000, guid: 9f6fa8394f552b34695cdfbe2a0f26e3, type: 3}
+    - {fileID: 21300000, guid: 9f6fa8394f552b34695cdfbe2a0f26e3, type: 3}
+    - {fileID: 21300000, guid: 80623c1dae811a34a9cc5f0dcab899ac, type: 3}
+    - {fileID: 21300000, guid: 08b4a7b44b4d0e147ad34bd66da13f89, type: 3}
+    - {fileID: 21300000, guid: 99db09ab164f00a4ca2048a79c11dee7, type: 3}
+    - {fileID: 21300000, guid: 8d8ba1f3d96f08641963341107b9eb56, type: 3}
+    - {fileID: 21300000, guid: 56e5914a8fb060548a5f4cb5ef351920, type: 3}
+    - {fileID: 21300000, guid: 8614021f8bb4f8a4995b62b13c7bb621, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

@@ -19,5 +19,6 @@ MonoBehaviour:
   distanceToKeepWithTarget: 0.8
   attakcAnimations:
   - {fileID: 7400000, guid: dd97bd46088949f42aff4f327f335f05, type: 2}
-  - {fileID: 7400000, guid: dd97bd46088949f42aff4f327f335f05, type: 2}
+  - {fileID: 7400000, guid: e8de84df9715d5a43addc5852ff10ca7, type: 2}
+  - {fileID: 7400000, guid: efbbd9fb7ecdceb4e94f59b59addcac3, type: 2}
   animator: {fileID: 9100000, guid: 18123c74511510f4a801ff85b7761b34, type: 2}
