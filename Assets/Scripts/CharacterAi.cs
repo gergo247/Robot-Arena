@@ -5,23 +5,14 @@ using UnityEngine;
 public class CharacterAi : MonoBehaviour
 {
     private static List<Character> Allys;
-
-    public float moveSpeed = 10f;
     public Animator animator;
-
-    [Range(0f, 1f)]
-    public float turnSpeed = .1f;
 
     public float repelRange = 5f;
     public float repelAmount = 1f;
-    //moved to class
-   // public float distanceToKeepWithTarget = 1f;
-
     public float startMaxChaseDistance = 20f;
     private float maxChaseDistance;
 
     [Header("Shooting")]
-
     public bool isShooter = false;
     public float strafeSpeed = 1f;
     public float shootDistance = 5f;
@@ -29,32 +20,26 @@ public class CharacterAi : MonoBehaviour
     public Transform firePoint;
     public float fireRate = 1f;
     private float nextTimeToFire = .5f;
-
     // private Rigidbody2D rb;
     private Character character;
-
     private Vector3 velocity;
-
-
     private Character target;
-
     bool canAttack;
     float autoAttackCurrentTime;
+    AudioSource audioSource;
 
-
-    // Use this for initialization
     void Start()
     {
         character = GetComponent<Character>();
-
         if (Allys == null)
         {
             Allys = new List<Character>();
         }
-
-        //    moveSpeed *= (Progression.Growth - 1f) * 0.5f + 1f;
-
         Allys.Add(character);
+
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.2f;
     }
 
     private void OnDestroy()
@@ -63,8 +48,6 @@ public class CharacterAi : MonoBehaviour
           if (Allys.Contains(character))
               Allys.Remove(character);
     }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (character.dead)
@@ -84,7 +67,7 @@ public class CharacterAi : MonoBehaviour
             return;
         }
         if (animator != null)
-            animator.SetFloat("Speed", moveSpeed);
+            animator.SetFloat("Speed", character.characterClass.moveSpeed);
 
 
         float distance = Vector2.Distance(character.rb.position, target.rb.position);
@@ -92,13 +75,12 @@ public class CharacterAi : MonoBehaviour
         //TODO: bool solution, this is hack
         if (direction.x > 0)
         {
-            transform.localScale = new Vector2(-2,2);
+            transform.localScale = new Vector2(-1,1);
         }
         else
         {
-            transform.localScale = new Vector2(2,2);
+            transform.localScale = new Vector2(1,1);
         }
-
         Vector2 newPos;
         if (distance < character.characterClass.attackRange)
             canAttack = true;
@@ -108,28 +90,8 @@ public class CharacterAi : MonoBehaviour
         //moving towards target
         MoveTowards();
         Attack();
-
-
-
-
-
-
-        //move with force ( overmoves rn)
         if (isShooter)
         {
-           //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-           ////character.rb.rotation = angle;
-           //if (distance > shootDistance)
-           //{
-           //    newPos = MoveRegular(direction);
-           //}
-           //else
-           //{
-           //    newPos = MoveStrafing(direction);
-           //}
-           ////Shoot();
-           //newPos -= character.rb.position;
-           // character.rb.AddForce(newPos, ForceMode2D.Force);
             character.rb.AddForce(direction, ForceMode2D.Force);
         }
     }
@@ -154,11 +116,18 @@ public class CharacterAi : MonoBehaviour
             else
             {
                 //attack animations
-                int randomInt = Random.Range(1, character.characterClass.attakcAnimations.Count);
+                int randomInt = Random.Range(0, character.characterClass.attakcAnimations.Count-1);
                 //animation calls damage too
-                if( character.characterClass.attakcAnimations.Count > 0)
+                Debug.Log("random : " + randomInt + "size 1: " + character.characterClass.attakcAnimations.Count + "Size 2:" + character.characterClass.attakcSounds.Count);
+                if (character.characterClass.attakcAnimations.Count > 0)
+                { 
                 animator.Play(character.characterClass.attakcAnimations[randomInt].name);
                 
+                    if (audioSource != null && character.characterClass.attakcSounds.Count > randomInt)
+                        audioSource.PlayOneShot(character.characterClass.attakcSounds[randomInt]);
+                }
+
+
                 autoAttackCurrentTime = 0;
             }
     }
@@ -168,12 +137,9 @@ public class CharacterAi : MonoBehaviour
         if (target != null)
           target.TakeDamage(character.characterClass.damage);
     }
-
     void LookForClosestEnemy()
     {
         GameObject[] targetGO = GameObject.FindGameObjectsWithTag("Character");
-      //  Debug.Log("targetGO length : " + targetGO.Length);
-
         Transform tMin = null;
         float minDist = Mathf.Infinity;
         Vector2 currentPosition = transform.position;
@@ -189,81 +155,22 @@ public class CharacterAi : MonoBehaviour
                     {
                         minDist = distanceToTarget;
                         target = tempTarget;
-                        //Debug.Log("found enemy : " + target);
                      }
                 }
             }
         }
-        //target.GetType
     }
     void MoveTowards()
     {
         //simple move towards
         Vector2 newPos = Vector2.zero;
-        var step = moveSpeed * Time.deltaTime;
+        var step = character.characterClass.moveSpeed * Time.deltaTime;
         if (Vector2.Distance(transform.position, target.rb.position) > character.characterClass.distanceToKeepWithTarget)
         { 
         transform.position = Vector2.MoveTowards(transform.position, target.rb.position, step);
-        //newPos = Vector2.MoveTowards(transform.position, target.rb.position, step);
         }
         else
             return;
-        // NEW THINGS, for repel
         Vector2 repelForce = Vector2.zero;
-       //if (GameManager.instance != null)
-       //    if (GameManager.instance.AllCharactersInScene.Count > 0)
-       //{
-       //    foreach (Character characters in GameManager.instance.AllCharactersInScene)
-       //    {
-       //        if (characters == character)
-       //            continue;
-       //
-       //        if (Vector2.Distance(characters.rb.position, character.rb.position) <= repelRange)
-       //        {
-       //            Vector2 repelDir = (character.rb.position - characters.rb.position).normalized;
-       //            repelForce += repelDir;
-       //        }
-       //    }
-       //    newPos += repelForce * Time.fixedDeltaTime * repelAmount;
-       //}
-       //    transform.position = newPos;
-
-
-    }
-
-    Vector2 MoveStrafing(Vector2 direction)
-    {
-        Vector2 newPos = transform.position + transform.right * Time.fixedDeltaTime * strafeSpeed;
-        return newPos;
-    }
-
-    Vector2 MoveRegular(Vector2 direction)
-    {
-        Vector2 repelForce = Vector2.zero;
-        if (GameManager.instance != null)
-            if (GameManager.instance.AllCharactersInScene.Count > 0)
-            {
-                foreach (Character characters in GameManager.instance.AllCharactersInScene)
-                {
-                    if (characters == character)
-                        continue;
-
-                    if (Vector2.Distance(characters.rb.position, character.rb.position) <= repelRange)
-                    {
-                        Vector2 repelDir = (character.rb.position - characters.rb.position).normalized;
-                        repelForce += repelDir;
-                    }
-                }
-            }
-
-        Vector2 newPos = transform.position + transform.up * Time.fixedDeltaTime * moveSpeed;
-        newPos += repelForce * Time.fixedDeltaTime * repelAmount;
-
-        return newPos;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, maxChaseDistance);
     }
 }

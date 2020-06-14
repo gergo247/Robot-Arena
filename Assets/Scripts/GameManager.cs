@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public List<Character> AllCharactersInScene = new List<Character>();
     [SerializeField]
     private GameObject sceneCamera;
-
     void Awake()
     {
         if (instance != null)
@@ -16,12 +15,10 @@ public class GameManager : MonoBehaviour
         else
             instance = this;
     }
-
     void Start()
     {
         LookForEveryCharacterInScene();
     }
-
     void LookForEveryCharacterInScene()
     {
         GameObject[] targetGO = GameObject.FindGameObjectsWithTag("Character");
@@ -37,11 +34,5 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        //AllCharactersInScene;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

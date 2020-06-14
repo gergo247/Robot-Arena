@@ -15,8 +15,9 @@ MonoBehaviour:
   maxHealth: 200
   autoAttackCooldown: 1
   damage: 25
-  attackRange: 0.9
-  distanceToKeepWithTarget: 0.8
+  attackRange: 0.8
+  distanceToKeepWithTarget: 0.7
+  moveSpeed: 1
   attakcAnimations:
   - {fileID: 7400000, guid: dd97bd46088949f42aff4f327f335f05, type: 2}
   - {fileID: 7400000, guid: e8de84df9715d5a43addc5852ff10ca7, type: 2}

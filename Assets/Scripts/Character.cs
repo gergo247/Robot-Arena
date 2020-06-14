@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(CharacterClass))]
 [RequireComponent(typeof(Transform))]
 public class Character : MonoBehaviour
 {
@@ -26,12 +25,8 @@ public class Character : MonoBehaviour
         currentHealth = characterClass.maxHealth;
         //Set the animationset of the character's class
         string animatorFilePath = characterClass.GetAnimatorFilePath();
-        //  this.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animations/KnightMale/KnightMale.controller");
         //set the animator on the character
         childCharacterGameObject.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
-        //original working
-        //GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
-
     }
     public float GetHealthAmount()
     {
@@ -48,7 +43,6 @@ public class Character : MonoBehaviour
             Die();
         }
     }
-
     void Die()
     {
         childCharacterGameObject.GetComponent<Animator>().SetTrigger("Die");

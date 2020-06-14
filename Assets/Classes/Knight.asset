@@ -15,8 +15,9 @@ MonoBehaviour:
   maxHealth: 100
   autoAttackCooldown: 0.5
   damage: 25
-  attackRange: 0.82
-  distanceToKeepWithTarget: 0.77
+  attackRange: 0.6
+  distanceToKeepWithTarget: 0.55
+  moveSpeed: 1
   attakcAnimations:
   - {fileID: 7400000, guid: 2c02f138cb3d2fe43aa8418152d0048d, type: 2}
   - {fileID: 7400000, guid: 20ca799206cd5cc4caeb50e3e4e2e373, type: 2}
@@ -24,4 +25,11 @@ MonoBehaviour:
   - {fileID: 7400000, guid: f81e065f353752448a7d9a0f51b141a9, type: 2}
   - {fileID: 7400000, guid: ae0230a73a764cf479919aed2305b792, type: 2}
   - {fileID: 7400000, guid: a3906c8b84669a44587eb4e0f83d35e8, type: 2}
+  attakcSounds:
+  - {fileID: 8300000, guid: dec7150b00afdd44eb9fc379b603837e, type: 3}
+  - {fileID: 8300000, guid: a4f35fa65d3490740b6653a90a145ef4, type: 3}
+  - {fileID: 8300000, guid: 2edb7b8e5efcbe64b8cea19e07b7a91c, type: 3}
+  - {fileID: 8300000, guid: 6b602a58ad62ce247a70090cb2af47c5, type: 3}
+  - {fileID: 8300000, guid: 6b602a58ad62ce247a70090cb2af47c5, type: 3}
+  - {fileID: 8300000, guid: 6b602a58ad62ce247a70090cb2af47c5, type: 3}
   animator: {fileID: 9100000, guid: 0b34640393d2bd4499aab64240cd9a3f, type: 2}
