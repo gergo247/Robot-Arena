@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterClass))]
+//[RequireComponent(typeof(CharacterClass))]
 [RequireComponent(typeof(Transform))]
-
 public class Character : MonoBehaviour
 {
     [SerializeField]
@@ -17,7 +16,9 @@ public class Character : MonoBehaviour
     public float currentHealth;
     public CharacterClass characterClass;
     [SerializeField]
-    private GameObject gameObject;
+    private GameObject mainGameObject;
+    [SerializeField]
+    private GameObject childCharacterGameObject;
 
     public bool dead;
     void Start()
@@ -25,9 +26,12 @@ public class Character : MonoBehaviour
         currentHealth = characterClass.maxHealth;
         //Set the animationset of the character's class
         string animatorFilePath = characterClass.GetAnimatorFilePath();
-          //  this.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animations/KnightMale/KnightMale.controller");
-          //set the animator on the character
-        this.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
+        //  this.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animations/KnightMale/KnightMale.controller");
+        //set the animator on the character
+        childCharacterGameObject.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
+        //original working
+        //GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
+
     }
     public float GetHealthAmount()
     {
@@ -47,7 +51,7 @@ public class Character : MonoBehaviour
 
     void Die()
     {
-        this.GetComponent<Animator>().SetTrigger("Die");
+        childCharacterGameObject.GetComponent<Animator>().SetTrigger("Die");
         Destroy(gameObject,1.5f);
     }
 

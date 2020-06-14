@@ -163,7 +163,7 @@ public class CharacterAi : MonoBehaviour
             }
     }
 
-    void DamageTargetFromAnimation()
+    public void DamageTargetFromAnimation()
     {
         if (target != null)
           target.TakeDamage(character.characterClass.damage);
