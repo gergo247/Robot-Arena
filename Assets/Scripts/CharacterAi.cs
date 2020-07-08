@@ -37,6 +37,7 @@ public class CharacterAi : MonoBehaviour
         }
         Allys.Add(character);
 
+        animator = GetComponent<Animator>();
 
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = 0.2f;
@@ -116,15 +117,15 @@ public class CharacterAi : MonoBehaviour
             else
             {
                 //attack animations
-                int randomInt = Random.Range(0, character.characterClass.attakcAnimations.Count-1);
+                int randomInt = Random.Range(0, character.attakcAnimations.Count-1);
                 //animation calls damage too
-                Debug.Log("random : " + randomInt + "size 1: " + character.characterClass.attakcAnimations.Count + "Size 2:" + character.characterClass.attakcSounds.Count);
-                if (character.characterClass.attakcAnimations.Count > 0)
+                Debug.Log("random : " + randomInt + "size 1: " + character.attakcAnimations.Count + "Size 2:" + character.attakcSounds.Count);
+                if (character.attakcAnimations.Count > 0)
                 { 
-                animator.Play(character.characterClass.attakcAnimations[randomInt].name);
+                    animator.Play(character.attakcAnimations[randomInt].name);
                 
-                    if (audioSource != null && character.characterClass.attakcSounds.Count > randomInt)
-                        audioSource.PlayOneShot(character.characterClass.attakcSounds[randomInt]);
+                    if (audioSource != null && character.attakcSounds.Count > randomInt)
+                        audioSource.PlayOneShot(character.attakcSounds[randomInt]);
                 }
 
 

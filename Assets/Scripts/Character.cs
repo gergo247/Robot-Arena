@@ -20,13 +20,21 @@ public class Character : MonoBehaviour
     private GameObject childCharacterGameObject;
 
     public bool dead;
+
+    public List<AnimationClip> attakcAnimations;
+    public List<AudioClip> attakcSounds;
+
+    [SerializeField]
+    Animator animator;
+
     void Start()
     {
         currentHealth = characterClass.maxHealth;
+        animator = GetComponent<Animator>();
         //Set the animationset of the character's class
-        string animatorFilePath = characterClass.GetAnimatorFilePath();
+        //string animatorFilePath = characterClass.GetAnimatorFilePath();
         //set the animator on the character
-        childCharacterGameObject.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
+       // childCharacterGameObject.GetComponent<Animator>().runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load(animatorFilePath);
     }
     public float GetHealthAmount()
     {
@@ -45,7 +53,7 @@ public class Character : MonoBehaviour
     }
     void Die()
     {
-        childCharacterGameObject.GetComponent<Animator>().SetTrigger("Die");
+        animator.SetTrigger("Die");
         Destroy(gameObject,1.5f);
     }
 
