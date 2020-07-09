@@ -41,12 +41,12 @@ PrefabInstance:
     - target: {fileID: 1899531979791833062, guid: 22d6ddc15aeb9b14484a2142f73b5cb6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.331481
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1899531979791833062, guid: 22d6ddc15aeb9b14484a2142f73b5cb6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.7239642
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1899531979791833062, guid: 22d6ddc15aeb9b14484a2142f73b5cb6,
         type: 3}
@@ -98,6 +98,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 18123c74511510f4a801ff85b7761b34, type: 2}
+    - target: {fileID: 4373330830357125716, guid: 22d6ddc15aeb9b14484a2142f73b5cb6,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5278903659615564554, guid: 22d6ddc15aeb9b14484a2142f73b5cb6,
         type: 3}
       propertyPath: m_Sprite
