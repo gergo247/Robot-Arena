@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LookForEveryCharacterInScene();
+
+     //   PlayerTeam.instance.PutIntoTeam();
+
+        PlayerTeam.instance.SpawnTeam();
     }
     void LookForEveryCharacterInScene()
     {
